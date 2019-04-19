@@ -45,9 +45,12 @@ class Graph
     void printDFT();
     void printBFT();
     void setAllVerticesUnvisited();
+<<<<<<< HEAD
     //
     bool Searchflight(string Depart, string Arrive);
 
+=======
+>>>>>>> 5c062c7f52e901dd36ca5b1e686245b1a5b10768
 
   private:
     vector<vertex> vertices; //stores vertices
