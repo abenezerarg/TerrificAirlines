@@ -25,9 +25,9 @@ int main(int argc, char*argv[])
   //Graph G;
   int option,Cpassenger, bagnum;
   string hold,depart,arrive,_PName, _Depart, _Arrive, _Bclass,_Bagnum;
-  int _PindexF = 1;
-  int _PindexB = 1;
-  int _PindexE = 1;
+  int _PindexF = 0;
+  int _PindexB = 0;
+  int _PindexE = 0;
 
   while(1)
   {
@@ -105,11 +105,11 @@ int main(int argc, char*argv[])
         {
           if(First.enqueue (_PName, _Depart, _Arrive, bagnum,_PindexF))
           {
+            checkF = true;
           _PindexF++;
           }
           else
           {
-            checkF = true;
             cout<<"book ticket fail"<<endl;
           }
         }
@@ -123,13 +123,14 @@ int main(int argc, char*argv[])
           else
           {
             cout<<"book ticket fail"<<endl;
-          }        }
+          }
+        }
         else if(_Bclass == "Econ")
         {
           if(Econ.enqueue(_PName, _Depart, _Arrive, bagnum,_PindexE))
           {
             checkE = true;
-          _PindexE++;
+            _PindexE++;
           }
           else
           {
@@ -149,15 +150,23 @@ int main(int argc, char*argv[])
     }
     if(checkE)
     {
-      cout<<"Comfirmation: "<< " Name " << _PName<<"Depart "<< depart <<" Arrive " << arrive << " Class: "<< _Bclass<< " Group number " << _PindexE <<endl;
+      cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< _Depart<<"." <<" Arrive " << _Arrive <<"."<< " Class: "<< _Bclass<<"."<< " Group number " << _PindexE <<endl;
+      cout<<endl;
+      checkE = false;
     }
     if(checkB)
     {
-      cout<<"Comfirmation: "<< " Name " << _PName<<"Depart "<< depart <<"Arrive " << arrive << " Class: "<< _Bclass<< " Group number " << _PindexB <<endl;
+      cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< _Depart<<"." <<" Arrive " << _Arrive <<"."<< " Class: "<< _Bclass<<"."<< " Group number " << _PindexB <<endl;
+      cout<<endl;
+      checkE = false;
     }
     if(checkF)
     {
-      cout<<"Comfirmation: "<< " Name " << _PName<<" Depart "<< depart <<" Arrive " << arrive << " Class: "<< _Bclass<< " Group number " << _PindexF <<endl;
+
+      cout<<"Comfirmation: "<< " Name " << _PName<<","<<" Depart "<< _Depart <<"."<<" Arrive " << _Arrive<<"." << " Class: "<< _Bclass<<"."<< " Group number " << _PindexF <<endl;
+      cout<<endl;
+      checkF = false;
+
     }
 
       //}
