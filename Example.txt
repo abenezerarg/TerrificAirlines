@@ -1,0 +1,25 @@
+Eddard Stark,Phoenix,Atlanta,First,5
+Robert Baratheon,Phoenix,Atlanta,Business,4
+Jaime Lannister,Phoenix,Atlanta,Business,3
+Catelyn Stark,Phoenix,Atlanta,Business,2
+Cersei Lannister,Phoenix,Atlanta,Business,1
+Daenerys Targaryen,Phoenix,Atlanta,First,2
+Jorah Mormont,Phoenix,Atlanta,Business,3
+Viserys Targaryen,Phoenix,Atlanta,Economy,4
+Jon Snow,Phoenix,Atlanta,First,5
+Sansa Stark,Phoenix,Atlanta,Business,4
+Arya Stark,Phoenix,Atlanta,First,3
+Robb Stark,Phoenix,Atlanta,First,2
+Theon Greyjoy,Phoenix,Atlanta,Business,1
+Joffrey Baratheon,Phoenix,Atlanta,Economy,2
+Davos Seaworth,Phoenix,Atlanta,Business,3
+Samwell Tarly,Phoenix,Atlanta,First,4
+Stannis Baratheon,Phoenix,Atlanta,Economy,5
+Melisandre,Phoenix,Atlanta,Economy,4
+Shae,Phoenix,Atlanta,Economy,3
+Ygritte,Phoenix,Atlanta,First,2
+Missandei,Phoenix,Atlanta,First,1
+Jaqen H'ghar,Phoenix,Atlanta,Business,2
+Brienne of Tarth,Phoenix,Atlanta,Business,3
+Bronn,Phoenix,Atlanta,Business,4
+Tormund Giantsbane,Phoenix,Atlanta,Business,5 
