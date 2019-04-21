@@ -1,37 +1,35 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  I am not very familar with graph 0.0
-//  This code still have so many error feel free to change any thing or rewrite completely
-//  I will work on this later
-//
-////////////////////////////////////////////////////////////////////////////////////////////
-
 #include <vector>
 #include <iostream>
-using namespace std;
+#include <string>
+#include "PirorityQ.hpp"
 
-#define length 100
+using namespace std:
 
 struct vertex;
+
 /*This is the struct for the adjacent vertices for each
 vertex in the graph. */
 
 struct Edge
 {
     vertex *v;
-    int Tdepart;  //departure time
-    int Tarrive;  //arriveal time
+    int distance;
+    int duration;
+    PriorityQueue firstClass(25);
+    PriorityQueue businessClass(50);
+    PriorityQueue coachClass(100);
+
 };
 
-
+/*this is the struct for each vertex in the graph. */
 struct vertex
 {
-    string Location;
-    bool   visited;
-    vector<Edge> Edges; //stores edges to adjacent vertices
+    std::string cityName;
+    bool visited;
+    std::vector<Edge> Edges; //stores edges to adjacent vertices
 };
 
 class Graph
