@@ -1,153 +1,123 @@
 #include "Graph.hpp"
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <sstream>
 #include <vector>
 #include <queue>
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  I am not very familar with graph 0.0
-//  This code still have so many error feel free to change any thing or rewrite completely
-//  I will work on this later
-//
-////////////////////////////////////////////////////////////////////////////////////////////
 using namespace std;
 
-Graph::Graph(){};
-Graph::~Graph(){};
+Graph::Graph(){}
 
+Graph::~Graph(){}
 
-void Graph::addEdge(string v1, string v2,int _Tdepart, int _Tarrive)
-{
-  Edge addE;
-  for(int i = 0; i < vertices.size(); i++)
-  {
-    if(v1==vertices[i].Location)
-    {
-      for(int k = 0; k < vertices.size(); k++)
-      {
-        if(v2 == vertices[k].Location && i != k)
-        {
-          addE.v = &vertices[k];
-          addE.Tdepart = _Tdepart;
-          addE.Tarrive = _Tarrive;
-          vertices[i].Edges.push_back(addE);
-        }
+void Graph::addVertex(string cityName){
+  vertex * found = findVertex(cityName);
+
+  if(found != NULL){
+    vertex temp;
+    temp.name = cityName;
+    temp.visited = false;
+    vertices.push_back(temp);
+  }else{
+    cout << "City already exists" << endl;
+  }
+}
+
+void Graph::addEdge(string city1, string city2, int distance, int duration){
+  vertex * c1 = findVertex(city1);
+  vertex * c2 = findVertex(city2);
+  if(c1 == NULL || c2 == NULL || c1 == c2){
+    cout << "One or both of the cities do not exist" << endl;
+    return;
+  }else{
+    Edge c1TOc2;
+    c1TOc2.distance = distance;
+    c1TOc2.duration = duration;
+    c1TOc2.v = c2;
+    for(int i = 0; i < vertices.size(); i++){
+      if(vertices[i].name == city1){
+        vertices[i].Edges.push_back(c1TOc2);
+        break;
       }
     }
   }
 }
 
-void Graph::addVertex(string AirportName)
-{
-  vertex newVertex;
-  newVertex.Location = AirportName;
-  vertices.push_back(newVertex);
-}
-
-void Graph::BFT_traversal(vertex *v)
-{
-  queue <vertex*> q;
-  vertex *frontv = v;                       //put v to the frontv
-  q.push(frontv);                           //store the first element to the head of the Q
-  vertex *store;
-  while(!q.empty())                         //if the Q is not empty
-  {
-    store = q.front();                      //store the head of the Q
-    q.pop();                                //pop the front Q
-
-
-      if (store -> visited == false)
-      {
-        cout<<store->Location<<endl;
-         store -> visited = true;           //set the store has been visited
-      }
-      for (int i = 0; i < store->Edges.size(); i++) //loop through edges
-      {
-          if(!(store->Edges[i].v->visited))
-          {
-            q.push(store->Edges[i].v);              //push the edges to Q
-          }
-      }
-  }
-}
-
-
-void Graph::printBFT()
-{
-  for(int i = 0; i < vertices.size(); i++) //set everything unvisited
-  {
-      vertices[i].visited = false;
-  }
-  for(int i=0; i < vertices.size(); i++) //travesal the departure city
-  {
-    BFT_traversal(&vertices[i]);
-  }
-}
-
-
-void Graph::setAllVerticesUnvisited()
-{
-  for(int i = 0; i < vertices.size(); i++)
-  vertices[i].visited = false;
-}
-
-
-void Graph::DFT_traversal(vertex *v, string destination)
-{
-  bool found = false;
-    if (v -> visited == false)    //if not visited
-      {
-        cout<<"Possible connection: ";
-        cout<<v->Location<<endl;  // print out the location
-         v-> visited = true;      //set the vertices as visited
-      }
-
-      for (int i = 0; i < v->Edges.size(); i++)  //looping through that edges
-      {
-        if(!( v->Edges[i].v->visited) && (vertices[i]).Location != destination ))   //if the edges has not been visited
-        {                                                                            //and the location is not what we are looking for
-          DFT_traversal(v->Edges[i].v); //look for that vertice's edges
-        }
+void Graph::displayEdges(){
+  for(int i = 0; i <  vertices.size(); i++){
+    cout << vertices[i].name << "-->";
+    if(vertices[i].Edges.empty())
+      cout << endl;
+    else{
+      for(int j = 0; j < vertices[i].Edges.size(); j++){
+        cout << vertices[i].Edges[j].v->name << " (" << vertices[i].Edges[j].distance << " miles)";
+        if(vertices[i].Edges[j].v->name == vertices[i].Edges.back().v->name)
+          cout << endl;
         else
-        {
-          break;
-          found = true;
-        }
+          cout << "***";
       }
-      if(!found)
-      {
-        cout<<"Sorry, We went through every possible option but can not find the flight for you"<<endl;
-      }
+    }
+  }
 }
 
+void Graph::printDFT(){
+  setAllVerticesUnvisited();
 
-void Graph::printDFT()
-{
-  for(int i = 0; i < vertices.size(); i++) //set everything unvisited
-    {
-      vertices[i].visited = false;
-    }
-  for(int i = 0; i < vertices.size(); i++) //loop through every vertices
-  {
+  for(int i = 0; i < vertices.size(); i++){
+    if(!vertices[i].visited)
+      cout << vertices[i].name << endl;
     DFT_traversal(&vertices[i]);
   }
 }
 
+void Graph::printBFT(){
+  setAllVerticesUnvisited();
 
-// I am having trouble coming up with the idea to print the Depart and Arrive Time together ????????
-void Graph::displayFlight(string Depart, string Arrive) //how to display passenger flight with possible connection flights
-{
-  vertices * store;
-  for(int i = 0; i < vertices.size(); i++) //loop through every
-  {
-    if(vertices[i].Location == Depart)
-    {
-      store = vertices[i];
-      break;
+  for(int i = 0; i < vertices.size(); i++){
+    if(!vertices[i].visited)
+      cout << vertices[i].name << endl;
+    BFT_traversal(&vertices[i]);
+  }
+}
+
+void Graph::setAllVerticesUnvisited(){
+  for(int i = 0; i < vertices.size(); i++){
+    vertices[i].visited = false;
+  }
+}
+
+vertex *Graph::findVertex(string name){
+  for(int i = 0; i < vertices.size(); i++){
+    if(vertices[i].name == name){
+      return &vertices[i];
     }
   }
-  DFT_traversal(store,Arrive);
+  return NULL;
+}
+
+void Graph::BFT_traversal(vertex * v){
+  v->visited = true;
+  vertex * n;
+  queue<vertex *> q;
+  q.push(v);
+  while(!q.empty()){
+    n = q.front();
+    q.pop();
+    for(int i = 0; i < n->Edges.size(); i++){
+      if(n->Edges[i].v->visited == false){
+        n->Edges[i].v->visited = true;
+        cout << n->Edges[i].v->name << endl;
+        q.push(n->Edges[i].v);
+      }
+    }
+  }
+}
+
+void Graph::DFT_traversal(vertex * v){
+  v->visited = true;
+  for(int i = 0; i < v->Edges.size(); i++){
+    if(v->Edges[i].v->visited != true){
+      cout << v->Edges[i].v->name << endl;
+      DFT_traversal(v->Edges[i].v);
+    }
+  }
 }
