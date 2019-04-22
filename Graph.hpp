@@ -43,6 +43,7 @@ class Graph
     void printDFT();
     void printBFT();
     void setAllVerticesUnvisited();
+    void addMember(string name, string class, string depart, string arrive, int bags, int index);
 
     bool Searchflight(string Depart, string Arrive);
 

@@ -12,7 +12,7 @@ Graph::~Graph(){}
 void Graph::addVertex(string name){
   vertex * found = findVertex(name);
 
-  if(found != NULL){
+  if(found == NULL){
     vertex temp;
     temp.cityName = name;
     temp.visited = false;
@@ -120,4 +120,29 @@ void Graph::DFT_traversal(vertex * v){
       DFT_traversal(v->Edges[i].v);
     }
   }
+}
+
+void Graph::addMember(string name, string class, string depart, string arrive, int bags, int index){
+  vertex * d = findVertex(depart);
+  vertex * a = findVertex(arrive);
+
+  if(d != NULL && a != NULL){
+    for(int i = 0, i < d->Edges.size(); i++){
+      if(d->Edges[i].v == a){
+        if(class == "First Class"){
+          d->Edges[i].firstClass.enqueue(name, depart, arrive, bags, index);
+        }else if(class == "Business Class"){
+          d->Edges[i].businessClass.enqueue(name, depart, arrive, bags, index);
+        }else if(class == "Economy Class"){
+          d->Edges[i].coachClass.enqueue(name, depart, arrive, bags, index);
+        }else{
+          cout << "We do not recognize this as a class option" << endl;
+        }
+      }
+      break;
+    }
+  }else{
+    cout << "One of the cities listed is not available to book to (/from). "
+  }
+  return;
 }
