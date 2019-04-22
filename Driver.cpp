@@ -17,21 +17,22 @@ void menu()
 
 }
 
-// void getCapitalCities(Cities &tree)
-// {
-//   ifstream capital("stateCapitals.txt");
-//
-//   if(capital.is_open())
-//   {
-//     string city;
-//     while(!capital.eof())
-//     {
-//       getline(capital, city);
-//       tree.addCity(city);
-//     }
-//   capital.close();
-//   }
-// }
+void getCapitalCities(Cities &tree)
+{
+  ifstream capital("stateCapitals.txt");
+
+  if(capital.is_open())
+  {
+    string city;
+    while(!capital.eof())
+    {
+      capital.ignore();
+      getline(capital, city);
+      tree.addCity(city);
+    }
+  capital.close();
+  }
+}
 
 int main(int argc, char*argv[])
 {

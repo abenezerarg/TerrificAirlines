@@ -3,7 +3,7 @@
 #include <string>
 #include <stdio.h>
 #include <iomanip>
-// #include <ctring>
+#include <ctring>
 #include "PriorityQ.hpp"
 using namespace std;
 
@@ -22,6 +22,7 @@ PriorityQueue::PriorityQueue(int queueSize)
   maxQueueSize = queueSize;
 }
 
+
 PriorityQueue::~PriorityQueue()
 {
     delete[] priorityQueue;
@@ -39,7 +40,7 @@ bool PriorityQueue::isEmpty()
   return false;
 }
 
-void PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string _BClass ,int _Bagnum)
+bool PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string _BClass ,int _Bagnum)
 {
   PNode newGroup;/*Making new group*/
   newGroup.PName = _PName;
@@ -48,9 +49,11 @@ void PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string
   newGroup.BClass = _BClass;
   newGroup.Bagnum = _Bagnum;
   newGroup.seatNum = currentQueueSize;
+  
   if(currentQueueSize == maxQueueSize)
   {
-    cout << "Heap full, cannot enqueue" << endl;
+    cout << "Sorry, we do not have available space for you in this class" << endl;
+    return false;
   }
   else
   {
@@ -58,6 +61,7 @@ void PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string
     repairUpward(currentQueueSize);
     currentQueueSize++;                         //increment current size
     cout<<"Congraduation! "<<_PName<< " You are going to " <<_Arrive<<endl;
+    return true;
   }
 }
 
@@ -79,12 +83,54 @@ void PriorityQueue::dequeue()
   }
 }
 
-PNode peek()
+bool PriorityQueue::cancelflight(string name)
 {
+  if(isEmpty())
+  {
+    cout << "I can not find you in our database" << endl;
+    return false;
+  }
+  else if(currentQueueSize==1)
+  {
+    currentQueueSize--;
+    cout<<"Your flight has been canceled"<<endl;
+    return true;
+  }
+  else
+  {
+    int p = -1;
+    for (int i = 0; i < currentQueueSize; i++)
+    {
+      if(priorityQueue[i].PName == name)
+      {
+        p = i;
+      }
+    }
+    if(p  != -1)
+    {
+      swap(priorityQueue[0],priorityQueue[p]);
+      currentQueueSize--;
+      repairDownward(0);
+      cout<<"Your flight has been canceled"<<endl;
+      return true;
+    }
+    else
+    {
+      cout<<"No passenger exists"<<endl;
+      return false;
+    }
+  }
+}
+
+PNode PriorityQueue::peek()
+{
+  if(isEmpty())
+  {
     PNode dummy;
-    // dummy.groupName = "";
-    // dummy.groupSize = -1;
-    // dummy.cookingTime = -1;
+    dummy.PName = "";
+    dummy.Depart = "";
+    dummy.Arrive = "";
+    dummy.Bagnum = -1;
     cout << "Heap empty, nothing to peek" << endl;
     return dummy;
 }
@@ -94,6 +140,7 @@ void PriorityQueue::repairDownward(int nodeIndex)
   int leftChild = (2*nodeIndex) + 1;
   int rightChild = (2*nodeIndex) + 2;
   int min = nodeIndex;                 //min is the highest priority
+  
   if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Bagnum < priorityQueue[min].Bagnum ))
   {
       min = leftChild;
@@ -129,7 +176,7 @@ void PriorityQueue::repairUpward(int nodeIndex)
     repairUpward(parent);
   }
 
-  if(nodeIndex > 0 && priorityQueue[nodeIndex].BClass == priorityQueue[parent].BClass && priorityQueue[nodeIndex].Bagnum < priorityQueue[parent].Bagnum)
+  if(nodeIndex > 0 && priorityQueue[nodeIndex].Bagnum == priorityQueue[parent].Bagnum && priorityQueue[nodeIndex].seatNum < priorityQueue[parent].seatNum)
   {
     swap(priorityQueue[parent],priorityQueue[nodeIndex]);
     repairUpward(parent);
