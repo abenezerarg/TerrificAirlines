@@ -18,9 +18,9 @@ struct Edge
     vertex *v;
     int distance;
     int duration;
-    PriorityQueue firstClass = PriorityQueue(25);
-    PriorityQueue businessClass = PriorityQueue(50);
-    PriorityQueue coachClass = PriorityQueue(100);
+    PriorityQueue* firstClass = new PriorityQueue(25);
+    PriorityQueue* businessClass = new PriorityQueue(50);
+    PriorityQueue* coachClass = new PriorityQueue(100);
 
 };
 
@@ -43,7 +43,11 @@ class Graph
     void printDFT();
     void printBFT();
     void setAllVerticesUnvisited();
+<<<<<<< HEAD
+    void addMember(string name, string class_, string depart, string arrive, int bags, int index);
+=======
     void addMember(string name, string Class, string depart, string arrive, int bags, int index);
+>>>>>>> origin/master
 
     bool Searchflight(string Depart, string Arrive);
     vertex *findVertex(std::string name);
