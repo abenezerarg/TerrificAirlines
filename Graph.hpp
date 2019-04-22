@@ -4,9 +4,9 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "PirorityQ.hpp"
+#include "PriorityQ.hpp"
 
-using namespace std:
+using namespace std;
 
 struct vertex;
 
@@ -18,9 +18,9 @@ struct Edge
     vertex *v;
     int distance;
     int duration;
-    PriorityQueue firstClass(25);
-    PriorityQueue businessClass(50);
-    PriorityQueue coachClass(100);
+    PriorityQueue firstClass = PriorityQueue(25);
+    PriorityQueue businessClass = PriorityQueue(50);
+    PriorityQueue coachClass = PriorityQueue(100);
 
 };
 
@@ -38,7 +38,7 @@ class Graph
     Graph();
     ~Graph();
     void addVertex(std::string cityName);
-    void addEdge(std::string city1, std::string city2, int distance);
+    void addEdge(std::string city1, std::string city2, int distance, int duration);
     void displayEdges();
     void printDFT();
     void printBFT();
