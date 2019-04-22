@@ -1,6 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stdio.h>
+#include <iomanip>
+#include <ctring>
 #include "PriorityQ.hpp"
 using namespace std;
 
@@ -37,15 +40,16 @@ bool PriorityQueue::isEmpty()
   return false;
 }
 
-bool PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive, int _Bagnum,int _Pindex)
+bool PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string _BClass ,int _Bagnum)
 {
   PNode newGroup;/*Making new group*/
   newGroup.PName = _PName;
   newGroup.Depart = _Depart;
   newGroup.Arrive = _Arrive;
+  newGroup.BClass = _BClass;
   newGroup.Bagnum = _Bagnum;
-  newGroup.Pindex = _Pindex;
-
+  newGroup.seatNum = currentQueueSize;
+  
   if(currentQueueSize == maxQueueSize)
   {
     cout << "Sorry, we do not have available space for you in this class" << endl;
@@ -129,11 +133,6 @@ PNode PriorityQueue::peek()
     dummy.Bagnum = -1;
     cout << "Heap empty, nothing to peek" << endl;
     return dummy;
-  }
-  else
-  {
-    return priorityQueue[0];
-  }
 }
 
 void PriorityQueue::repairDownward(int nodeIndex)
@@ -141,20 +140,21 @@ void PriorityQueue::repairDownward(int nodeIndex)
   int leftChild = (2*nodeIndex) + 1;
   int rightChild = (2*nodeIndex) + 2;
   int min = nodeIndex;                 //min is the highest priority
-  if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Pindex < priorityQueue[min].Pindex ))
+  
+  if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Bagnum < priorityQueue[min].Bagnum ))
   {
       min = leftChild;
   }
-  else if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Pindex == priorityQueue[min].Pindex) && (priorityQueue[leftChild].Bagnum < priorityQueue[min].Bagnum))
+  else if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Bagnum == priorityQueue[min].Bagnum) && (priorityQueue[leftChild].seatNum < priorityQueue[min].seatNum))
   {
       min = leftChild;
   }
 
-  if((rightChild < currentQueueSize) && (priorityQueue[min].Pindex > priorityQueue[rightChild].Pindex))
+  if((rightChild < currentQueueSize) && (priorityQueue[min].Bagnum > priorityQueue[rightChild].Bagnum))
   {
       min = rightChild;
   }
-  else if((rightChild < currentQueueSize) && (priorityQueue[rightChild].Pindex == priorityQueue[min].Pindex) && (priorityQueue[rightChild].Bagnum < priorityQueue[min].Bagnum))
+  else if((rightChild < currentQueueSize) && (priorityQueue[rightChild].Bagnum == priorityQueue[min].Bagnum) && (priorityQueue[rightChild].seatNum < priorityQueue[min].seatNum))
   {
     min = rightChild;
   }
@@ -170,15 +170,82 @@ void PriorityQueue::repairDownward(int nodeIndex)
 void PriorityQueue::repairUpward(int nodeIndex)
 {
   int parent = (nodeIndex-1)/2;
-  if(nodeIndex>0&&priorityQueue[nodeIndex].Pindex < priorityQueue[parent].Pindex)
-
+  if(nodeIndex>0 &&priorityQueue[nodeIndex].BClass < priorityQueue[parent].BClass)
   {
     swap(priorityQueue[nodeIndex],priorityQueue[parent]);
     repairUpward(parent);
   }
-  if(nodeIndex > 0 && priorityQueue[nodeIndex].Pindex == priorityQueue[parent].Pindex && priorityQueue[nodeIndex].Bagnum < priorityQueue[parent].Bagnum)
+
+  if(nodeIndex > 0 && priorityQueue[nodeIndex].Bagnum == priorityQueue[parent].Bagnum && priorityQueue[nodeIndex].seatNum < priorityQueue[parent].seatNum)
   {
     swap(priorityQueue[parent],priorityQueue[nodeIndex]);
     repairUpward(parent);
   }
+}
+
+void PriorityQueue::search(string name, int add)
+{
+  PNode *found = NULL;
+  for(int i = 0; i < currentQueueSize; i++)
+  {
+    if(name == priorityQueue[i].PName)
+    {
+      cout << "----------------------------------------------------------------" << endl;
+      cout << "[Pasenger name: " << priorityQueue[i].PName<< "]" <<"   [Departaure city: "<<priorityQueue[i].Depart << "]"<< endl;
+      cout << endl;
+      cout << "[seat: " <<priorityQueue[i].seatNum+1+add<<"]"<<"   [Arrival city: "<<priorityQueue[i].Arrive <<"]"<< endl;
+      cout << endl;
+      cout <<  "[class: " <<priorityQueue[i].BClass<< "]" << "   [checked bags: " << priorityQueue[i].Bagnum <<"]"<< endl;
+      cout << endl;
+      cout << "----------------------------------------------------------------" << endl;
+      return;
+    }
+  }
+    cout << "passenger not found" << endl;
+
+
+}
+
+cityNode *insert(cityNode *comp, cityNode *ins)
+{
+  if(comp == NULL)
+  {
+  comp = ins;
+  return comp;
+ }
+ else
+ {
+ if(ins->cityName.compare(comp->cityName) < 0)
+   {
+     comp->leftChild = insert(comp->leftChild, ins);
+     return comp;
+   }
+   else
+   {
+     comp->rightChild = insert(comp->rightChild, ins);
+     return comp;
+   }
+ }
+}
+
+void Cities::addCity(string city)
+{
+  cityNode *newNode = new cityNode;
+  newNode->cityName = city;
+  newNode->leftChild = newNode->rightChild = NULL;
+   root = insert(root, newNode);
+}
+
+bool Cities::isInTree(string city)
+{
+  cityNode *temp = root;
+  while(temp != NULL && temp->cityName.compare(city) != 0)
+  {
+    if(city.compare(temp->cityName) < 0)temp = temp->leftChild;
+    else{
+      temp = temp->rightChild;
+    }
+  }
+  if(temp == NULL) return false;
+  return true;
 }

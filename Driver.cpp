@@ -2,8 +2,9 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-//#include "PriorityQ.hpp"
+#include "PriorityQ.hpp"
 #include "Graph.hpp"
+
 using namespace std;
 //problem, what happen if two people have the same name?
 void menu()
@@ -13,11 +14,28 @@ void menu()
   cout << "2. Book tickets" << endl;
   cout << "3. Cancel tickets" << endl;
   cout << "4. Reschedule flights" << endl;
-  cout << "5. Print flight information(Still in Maintenence)" << endl;
-  cout << "6. Quit" << endl;
+  cout << "5. Print passenger information" << endl;
+  cout << "6. Print flight information(Still in Maintenence)" << endl;
+  cout << "7. Quit" << endl;
   cout << "More feature coming soon..." <<endl;
 
 }
+
+// void getCapitalCities(Cities &tree)
+// {
+//   ifstream capital("stateCapitals.txt");
+//
+//   if(capital.is_open())
+//   {
+//     string city;
+//     while(!capital.eof())
+//     {
+//       getline(capital, city);
+//       tree.addCity(city);
+//     }
+//   capital.close();
+//   }
+// }
 
 int main(int argc, char*argv[])
 {
@@ -60,7 +78,6 @@ int main(int argc, char*argv[])
       }
       ss.clear();
     }
-
     PriorityQueue First(25);
     PriorityQueue Buss(50);
     PriorityQueue Econ(100);
@@ -95,10 +112,20 @@ int main(int argc, char*argv[])
           bool checkB = false;
           bool checkF = false;
           bool checkE = false;
-          cout<<"Please enter your departing airport code"<<endl;
-          getline(cin,_Depart);
-          cout<<"Please enter your arriveal airport code"<<endl;
-          getline(cin,_Arrive);
+          cout<<"Departaure city: ";
+        getline(cin,depart);
+        while(!tree->isInTree(depart))
+        {
+          cout << "TerrificAirlines only operates in capital cities in the United States: ";
+          getline(cin,depart);
+        }
+        cout<<"Arrival city: ";
+        getline(cin,arrive);
+        while(!tree->isInTree(arrive))
+        {
+          cout << "TerrificAirlines only operates in capital cities in the United States: ";
+          getline(cin,arrive);
+        }
           // if(G.Searchflight(_Depart,_Arrive))
           // {
           cout<<"Please enter your full name"<<endl;
@@ -322,6 +349,21 @@ int main(int argc, char*argv[])
             break;
           }
           case 5:
+      {
+        cout << "Name of passenger: ";
+        getline(cin, name);
+        cout << "Traveling class: ";
+        getline(cin, _BClass);
+        if(_BClass.compare("First") == 0 || _BClass.compare("first") == 0)
+        First.search(name, 0);
+        if(_BClass.compare("Business") == 0 || _BClass.compare("business") == 0)
+        Buss.search(name, 25);
+        if(_BClass.compare("Economy") == 0 || _BClass.compare("economy") == 0)
+        Econ.search(name, 50);
+
+        break;
+      }
+          case 6:
           {
             cout << "displayEdges" <<endl;
             g.displayEdges();
@@ -331,13 +373,12 @@ int main(int argc, char*argv[])
             g.printDFT();
             break;
           }
-          case 6:
+          case 7:
           {
-            cout<<"Goodbye"<<endl;
+            cout<<"Thank you for visiting TerrificAirlines"<<endl;
             return 0;
           }
         }
-
       }
     }
 
