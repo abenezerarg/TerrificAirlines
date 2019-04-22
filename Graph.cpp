@@ -9,12 +9,12 @@ Graph::Graph(){}
 
 Graph::~Graph(){}
 
-void Graph::addVertex(string cityName){
-  vertex * found = findVertex(cityName);
+void Graph::addVertex(string name){
+  vertex * found = findVertex(name);
 
   if(found != NULL){
     vertex temp;
-    temp.name = cityName;
+    temp.cityName = name;
     temp.visited = false;
     vertices.push_back(temp);
   }else{
@@ -34,7 +34,7 @@ void Graph::addEdge(string city1, string city2, int distance, int duration){
     c1TOc2.duration = duration;
     c1TOc2.v = c2;
     for(int i = 0; i < vertices.size(); i++){
-      if(vertices[i].name == city1){
+      if(vertices[i].cityName == city1){
         vertices[i].Edges.push_back(c1TOc2);
         break;
       }
@@ -44,13 +44,13 @@ void Graph::addEdge(string city1, string city2, int distance, int duration){
 
 void Graph::displayEdges(){
   for(int i = 0; i <  vertices.size(); i++){
-    cout << vertices[i].name << "-->";
+    cout << vertices[i].cityName << "-->";
     if(vertices[i].Edges.empty())
       cout << endl;
     else{
       for(int j = 0; j < vertices[i].Edges.size(); j++){
-        cout << vertices[i].Edges[j].v->name << " (" << vertices[i].Edges[j].distance << " miles)";
-        if(vertices[i].Edges[j].v->name == vertices[i].Edges.back().v->name)
+        cout << vertices[i].Edges[j].v->cityName << " (" << vertices[i].Edges[j].distance << " miles, " << vertices[i].Edges[j].duration << " min)";
+        if(vertices[i].Edges[j].v->cityName == vertices[i].Edges.back().v->cityName)
           cout << endl;
         else
           cout << "***";
@@ -64,7 +64,7 @@ void Graph::printDFT(){
 
   for(int i = 0; i < vertices.size(); i++){
     if(!vertices[i].visited)
-      cout << vertices[i].name << endl;
+      cout << vertices[i].cityName << endl;
     DFT_traversal(&vertices[i]);
   }
 }
@@ -74,7 +74,7 @@ void Graph::printBFT(){
 
   for(int i = 0; i < vertices.size(); i++){
     if(!vertices[i].visited)
-      cout << vertices[i].name << endl;
+      cout << vertices[i].cityName << endl;
     BFT_traversal(&vertices[i]);
   }
 }
@@ -87,7 +87,7 @@ void Graph::setAllVerticesUnvisited(){
 
 vertex *Graph::findVertex(string name){
   for(int i = 0; i < vertices.size(); i++){
-    if(vertices[i].name == name){
+    if(vertices[i].cityName == name){
       return &vertices[i];
     }
   }
@@ -105,7 +105,7 @@ void Graph::BFT_traversal(vertex * v){
     for(int i = 0; i < n->Edges.size(); i++){
       if(n->Edges[i].v->visited == false){
         n->Edges[i].v->visited = true;
-        cout << n->Edges[i].v->name << endl;
+        cout << n->Edges[i].v->cityName << endl;
         q.push(n->Edges[i].v);
       }
     }
@@ -116,7 +116,7 @@ void Graph::DFT_traversal(vertex * v){
   v->visited = true;
   for(int i = 0; i < v->Edges.size(); i++){
     if(v->Edges[i].v->visited != true){
-      cout << v->Edges[i].v->name << endl;
+      cout << v->Edges[i].v->cityName << endl;
       DFT_traversal(v->Edges[i].v);
     }
   }

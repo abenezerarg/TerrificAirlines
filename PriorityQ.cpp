@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "PirorityQ.hpp"
+#include "PriorityQ.hpp"
 using namespace std;
 
 void swap(PNode &a,PNode &b)
