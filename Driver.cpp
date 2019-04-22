@@ -39,6 +39,7 @@ int main(int argc, char*argv[])
     ss << temp;
     getline(ss, l, ',');
     while(getline(ss, l, ',')){
+      cout << l << endl;
       g.addVertex(l);
       verti.push_back(l);
     }
