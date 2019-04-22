@@ -114,14 +114,14 @@ int main(int argc, char*argv[])
           bool checkE = false;
           cout<<"Departaure city: ";
         getline(cin,depart);
-        while(!tree->isInTree(depart))
+        while(!g.findVertex(depart))
         {
           cout << "TerrificAirlines only operates in capital cities in the United States: ";
           getline(cin,depart);
         }
         cout<<"Arrival city: ";
         getline(cin,arrive);
-        while(!tree->isInTree(arrive))
+        while(!g.findVertex(arrive))
         {
           cout << "TerrificAirlines only operates in capital cities in the United States: ";
           getline(cin,arrive);
@@ -172,10 +172,9 @@ int main(int argc, char*argv[])
               check = true;
               if(_Bclass == "First")
               {
-                if(First.enqueue (_PName, _Depart, _Arrive, bagnum,_PindexF))
+                if(First.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
                 {
                   checkF = true;
-                  _PindexF++;
                 }
                 else
                 {
@@ -184,10 +183,9 @@ int main(int argc, char*argv[])
               }
               else if(_Bclass == "Buss")
               {
-                if(Buss.enqueue (_PName, _Depart, _Arrive, bagnum,_PindexB))
+                if(Buss.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
                 {
                   checkB = true;
-                  _PindexB++;
                 }
                 else
                 {
@@ -196,15 +194,15 @@ int main(int argc, char*argv[])
               }
               else if(_Bclass == "Econ")
               {
-                if(Econ.enqueue(_PName, _Depart, _Arrive, bagnum,_PindexE))
+                if(Econ.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
                 {
                   checkE = true;
-                  _PindexE++;
                 }
                 else
                 {
                   cout<<"book ticket fail"<<endl;
-                }        }
+                }
+              }
                 else
                 {
                   cout <<"Not a vaild class, please enter a valid class (First/Buss/Econ)"<<endl;
@@ -219,20 +217,20 @@ int main(int argc, char*argv[])
             }
             if(checkE)
             {
-              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< _Depart<<"." <<" Arrive " << _Arrive <<"."<< " Class: "<< _Bclass<<"."<< " Group number " << _PindexE <<endl;
+              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
               cout<<endl;
               checkE = false;
             }
             if(checkB)
             {
-              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< _Depart<<"." <<" Arrive " << _Arrive <<"."<< " Class: "<< _Bclass<<"."<< " Group number " << _PindexB <<endl;
+              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
               cout<<endl;
               checkE = false;
             }
             if(checkF)
             {
 
-              cout<<"Comfirmation: "<< " Name " << _PName<<","<<" Depart "<< _Depart <<"."<<" Arrive " << _Arrive<<"." << " Class: "<< _Bclass<<"."<< " Group number " << _PindexF <<endl;
+              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
               cout<<endl;
               checkF = false;
 
@@ -327,15 +325,15 @@ int main(int argc, char*argv[])
             getline(cin,_Bclass);
             if(_Bclass == "First")
             {
-              First.enqueue (name, _Depart, _Arrive, bagnum,_PindexF);
+              First.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
             }
             else if(_Bclass == "Buss")
             {
-              Buss.enqueue (name, _Depart, _Arrive, bagnum,_PindexB);
+              Buss.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
             }
             else if(_Bclass == "Econ")
             {
-              Econ.enqueue(name, _Depart, _Arrive, bagnum,_PindexE);
+              Econ.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
             }
             else
             {
@@ -350,15 +348,16 @@ int main(int argc, char*argv[])
           }
           case 5:
       {
+        string name;
         cout << "Name of passenger: ";
         getline(cin, name);
         cout << "Traveling class: ";
-        getline(cin, _BClass);
-        if(_BClass.compare("First") == 0 || _BClass.compare("first") == 0)
+        getline(cin, _Bclass);
+        if(_Bclass.compare("First") == 0 || _Bclass.compare("first") == 0)
         First.search(name, 0);
-        if(_BClass.compare("Business") == 0 || _BClass.compare("business") == 0)
+        if(_Bclass.compare("Business") == 0 || _Bclass.compare("business") == 0)
         Buss.search(name, 25);
-        if(_BClass.compare("Economy") == 0 || _BClass.compare("economy") == 0)
+        if(_Bclass.compare("Economy") == 0 || _Bclass.compare("economy") == 0)
         Econ.search(name, 50);
 
         break;

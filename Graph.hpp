@@ -43,16 +43,15 @@ class Graph
     void printDFT();
     void printBFT();
     void setAllVerticesUnvisited();
-    void addMember(string name, string class, string depart, string arrive, int bags, int index);
+    void addMember(string name, string Class, string depart, string arrive, int bags, int index);
 
     bool Searchflight(string Depart, string Arrive);
-
+    vertex *findVertex(std::string name);
 
 
   private:
     vector<vertex> vertices; //stores vertices
 
-    vertex *findVertex(std::string name);
     void BFT_traversal(vertex *v);
     void DFT_traversal(vertex *v);
 
