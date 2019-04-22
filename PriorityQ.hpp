@@ -1,8 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <ctring>
-
+// #include <ctring>
+#ifndef PRIORITYQ_HPP
+#define PRIORITYQ_HPP
 using namespace std;
 
 // #define First 1; //First class
@@ -36,7 +37,7 @@ class PriorityQueue
     void dequeue();
 
     // return: groupID of the group at the front of the priority queue
-    PNode peek();
+    // PNode peek();
 
     //return: true if queue is full, false otherwise
     bool isFull();
@@ -60,12 +61,12 @@ class PriorityQueue
     int maxQueueSize; //maximum capacity of priority queue
 };
 
-// struct cityNode{
-//   string cityName;
-//   cityNode *parent = nullptr;     //  Pointer to the parent node
-//   cityNode *leftChild = nullptr;  // Pointer to the leftchild
-//   cityNode *rightChild = nullptr; // Pointer to the rightChild
-// };
+struct cityNode{
+  string cityName;
+  cityNode *parent = nullptr;     //  Pointer to the parent node
+  cityNode *leftChild = nullptr;  // Pointer to the leftchild
+  cityNode *rightChild = nullptr; // Pointer to the rightChild
+};
 class Cities
 {
  public:
@@ -77,3 +78,5 @@ class Cities
 
 
 };
+
+#endif

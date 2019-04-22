@@ -3,7 +3,7 @@
 #include <string>
 #include <stdio.h>
 #include <iomanip>
-#include <ctring>
+// #include <ctring>
 #include "PriorityQ.hpp"
 using namespace std;
 
@@ -49,7 +49,7 @@ bool PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string
   newGroup.BClass = _BClass;
   newGroup.Bagnum = _Bagnum;
   newGroup.seatNum = currentQueueSize;
-  
+
   if(currentQueueSize == maxQueueSize)
   {
     cout << "Sorry, we do not have available space for you in this class" << endl;
@@ -122,25 +122,27 @@ bool PriorityQueue::cancelflight(string name)
   }
 }
 
-PNode PriorityQueue::peek()
-{
-  if(isEmpty())
-  {
-    PNode dummy;
-    dummy.PName = "";
-    dummy.Depart = "";
-    dummy.Arrive = "";
-    dummy.Bagnum = -1;
-    cout << "Heap empty, nothing to peek" << endl;
-    return dummy;
-}
+// PNode PriorityQueue::peek()
+// {
+//   if(isEmpty())
+//   {
+//     PNode dummy;
+//     dummy.PName = "";
+//     dummy.Depart = "";
+//     dummy.Arrive = "";
+//     dummy.Bagnum = -1;
+//     cout << "Heap empty, nothing to peek" << endl;
+//     return dummy;
+//   }
+//   return ;
+// }
 
 void PriorityQueue::repairDownward(int nodeIndex)
 {
   int leftChild = (2*nodeIndex) + 1;
   int rightChild = (2*nodeIndex) + 2;
   int min = nodeIndex;                 //min is the highest priority
-  
+
   if((leftChild < currentQueueSize) && (priorityQueue[leftChild].Bagnum < priorityQueue[min].Bagnum ))
   {
       min = leftChild;
@@ -206,46 +208,46 @@ void PriorityQueue::search(string name, int add)
 
 }
 
-cityNode *insert(cityNode *comp, cityNode *ins)
-{
-  if(comp == NULL)
-  {
-  comp = ins;
-  return comp;
- }
- else
- {
- if(ins->cityName.compare(comp->cityName) < 0)
-   {
-     comp->leftChild = insert(comp->leftChild, ins);
-     return comp;
-   }
-   else
-   {
-     comp->rightChild = insert(comp->rightChild, ins);
-     return comp;
-   }
- }
-}
-
-void Cities::addCity(string city)
-{
-  cityNode *newNode = new cityNode;
-  newNode->cityName = city;
-  newNode->leftChild = newNode->rightChild = NULL;
-   root = insert(root, newNode);
-}
-
-bool Cities::isInTree(string city)
-{
-  cityNode *temp = root;
-  while(temp != NULL && temp->cityName.compare(city) != 0)
-  {
-    if(city.compare(temp->cityName) < 0)temp = temp->leftChild;
-    else{
-      temp = temp->rightChild;
-    }
-  }
-  if(temp == NULL) return false;
-  return true;
-}
+// cityNode *insert(cityNode *comp, cityNode *ins)
+// {
+//   if(comp == NULL)
+//   {
+//   comp = ins;
+//   return comp;
+//  }
+//  else
+//  {
+//  if(ins->cityName.compare(comp->cityName) < 0)
+//    {
+//      comp->leftChild = insert(comp->leftChild, ins);
+//      return comp;
+//    }
+//    else
+//    {
+//      comp->rightChild = insert(comp->rightChild, ins);
+//      return comp;
+//    }
+//  }
+//  }
+//
+// void Cities::addCity(string city)
+// {
+//   cityNode *newNode = new cityNode;
+//   newNode->cityName = city;
+//   newNode->leftChild = newNode->rightChild = NULL;
+//    root = insert(root, newNode);
+// }
+//
+// bool Cities::isInTree(string city)
+// {
+//   cityNode *temp = root;
+//   while(temp != NULL && temp->cityName.compare(city) != 0)
+//   {
+//     if(city.compare(temp->cityName) < 0)temp = temp->leftChild;
+//     else{
+//       temp = temp->rightChild;
+//     }
+//   }
+//   if(temp == NULL) return false;
+//   return true;
+// }

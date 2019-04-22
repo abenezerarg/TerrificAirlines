@@ -35,8 +35,9 @@ void Graph::addEdge(string city1, string city2, int distance, int duration){
     c1TOc2.v = c2;
     for(int i = 0; i < vertices.size(); i++){
       if(vertices[i].cityName == city1){
-        vertices[i].Edges.push_back(c1TOc2);
-        break;
+        //this is where malloc error is
+        // vertices[i].Edges.push_back(c1TOc2);
+        return;
       }
     }
   }
@@ -122,19 +123,19 @@ void Graph::DFT_traversal(vertex * v){
   }
 }
 
-void Graph::addMember(string name, string class, string depart, string arrive, int bags, int index){
+void Graph::addMember(string name, string Class, string depart, string arrive, int bags, int index){
   vertex * d = findVertex(depart);
   vertex * a = findVertex(arrive);
 
   if(d != NULL && a != NULL){
-    for(int i = 0, i < d->Edges.size(); i++){
+    for(int i = 0; i < d->Edges.size(); i++){
       if(d->Edges[i].v == a){
-        if(class == "First Class"){
-          d->Edges[i].firstClass.enqueue(name, depart, arrive, bags, index);
-        }else if(class == "Business Class"){
-          d->Edges[i].businessClass.enqueue(name, depart, arrive, bags, index);
-        }else if(class == "Economy Class"){
-          d->Edges[i].coachClass.enqueue(name, depart, arrive, bags, index);
+        if(Class == "First Class"){
+          d->Edges[i].firstClass.enqueue(name, depart, arrive, Class, bags);
+        }else if(Class == "Business Class"){
+          d->Edges[i].businessClass.enqueue(name, depart, arrive, Class, bags);
+        }else if(Class == "Economy Class"){
+          d->Edges[i].coachClass.enqueue(name, depart, arrive, Class, bags);
         }else{
           cout << "We do not recognize this as a class option" << endl;
         }
@@ -142,7 +143,7 @@ void Graph::addMember(string name, string class, string depart, string arrive, i
       break;
     }
   }else{
-    cout << "One of the cities listed is not available to book to (/from). "
+    cout << "One of the cities listed is not available to book to (/from). ";
   }
   return;
 }
