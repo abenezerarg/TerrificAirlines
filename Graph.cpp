@@ -162,3 +162,90 @@ Edge * Graph::findEdge(string depart, string arrive){
   }
   return NULL;
 }
+
+void Graph::bookFlight(){
+  string _PName, _Bclass, _Bagnum, depart, arrive;
+  int bagnum;
+  string Bcheck;
+  bool check= false;
+  Edge * pq;
+  float price;
+  cout<<"Departaure city: ";
+  getline(cin,depart);
+  while(!findVertex(depart))
+  {
+    cout << "TerrificAirlines does not have any flight available from that city: ";
+    getline(cin,depart);
+  }
+  cout<<"Arrival city: ";
+  getline(cin,arrive);
+  while(!findVertex(arrive))
+  {
+    cout << "TerrificAirlines does not have any flight available to that city: ";
+    getline(cin,arrive);
+  }
+  cout<<"Please enter your full name"<<endl;
+  getline(cin,_PName);
+
+  while(!check)
+  {
+    cout<<"Please enter number of bag"<<endl;
+    getline(cin,_Bagnum);
+    bagnum = stoi(_Bagnum);
+    if(bagnum > 0 && bagnum <=3)
+    {
+      check = true;
+    }
+    else
+    {
+      check = false;
+      cout<<"Sorry, please enter the valid input, we only allow up to 3 bags at most"<<endl;
+    }
+  }
+  check = false;
+  while(!check)
+  {
+
+    cout<<"Please enter the class type from the following options: (First Class/ Business Class/ Economy Class)"<<endl;
+    getline(cin,_Bclass);
+    if(_Bclass == "First Class" || _Bclass == "Business Class" || _Bclass =="Economy Class")
+    {
+      check = true;
+    }
+    else
+    {
+      check= false;
+      cout<<"Please enter from the available options (First Class/ Business Class/ Economy Class)"<<endl;
+    }
+  }
+  check = false;
+  while(!check)
+  {
+    pq = findEdge(depart, arrive);
+    if(pq != NULL){
+      price = pq->distance;
+      if(_Bclass == "First Class"){
+        price = (price/2) + 50;
+      }else if(_Bclass == "Business Class"){
+        price = (price/3) + 50;
+      }else{
+        price = (price/4) + 50;
+      }
+
+    }
+    cout << std::fixed;
+    cout << fixed <<setprecision(2);
+    cout<<"The price of this trip will be $"<< price << ", do you want to book this trip? Please enter (Yes/No)"<<endl;
+    getline(cin,Bcheck);
+    if(Bcheck == "Yes"){
+      addMember(_PName, _Bclass, depart, arrive, bagnum);
+      check = true;
+    }else if(Bcheck == "No"){
+      break;
+    }
+    else{
+        cout<<"Please enter (Yes/No)"<<endl;
+        check = false;
+      }
+    }
+}

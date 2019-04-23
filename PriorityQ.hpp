@@ -18,6 +18,7 @@ struct PNode
   string BClass; //boarding class
   int    Bagnum; //bag number
   int    seatNum;
+  int    confNum;
 };
 
 class PriorityQueue
