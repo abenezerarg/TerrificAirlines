@@ -11,14 +11,11 @@ using namespace std;
 void menu()
 {
   cout << "============TerrificAirlines Booking Agency============" << endl;
-  cout << "1. Search flights (Still in Maintenence)" << endl;
-  cout << "2. Book tickets" << endl;
-  cout << "3. Cancel tickets" << endl;
-  cout << "4. Reschedule flights" << endl;
-  cout << "5. Print passenger information" << endl;
-  cout << "6. Print flight information(Still in Maintenence)" << endl;
-  cout << "7. Quit" << endl;
-  cout << "More feature coming soon..." <<endl;
+  cout << "1. Book tickets" << endl;
+  cout << "2. Cancel tickets" << endl;
+  cout << "3. Reschedule flights" << endl;
+  cout << "4. Print passenger information" << endl;
+  cout << "5. Quit" << endl;
 
 }
 
@@ -77,58 +74,66 @@ int main(int argc, char*argv[])
       option = stoi(hold);
       switch(option)
       {
-        case 1:
-        {
-          cout<<"Please type the depart location"<<endl;
-          getline(cin,depart);
-          cout<<"Please type the destination"<<endl;
-          getline(cin,arrive);
 
-          //check edges
-          break;
-        }
-        case 2:
+        case 1:
         {
           g.bookFlight();
           break;
         }
-          case 3:
+          case 2:
           {
-            string name;
-            bool check = false;
+            string name,depart,arrive;
+            bool check = false, checkedge = false;
             while (!check)
             {
-              cout<<"Please enter your class before you cancel (First/Buss/Econ)"<<endl;
+              cout<<"Please enter your class before you cancel (First Class / Business Class / Economy Class)"<<endl;
               getline(cin, _Bclass);
-              if(_Bclass == "First" || _Bclass == "Buss" || _Bclass =="Econ")
+              if(_Bclass == "First Class" || _Bclass == "Business Class" || _Bclass =="Economy Class")
               {
                 check = true;
               }
               else
               {
-                cout<<"Please enter (First/Buss/Econ)"<<endl;
+                cout<<"Please enter (First Class / Business Class / Economy Class)"<<endl;
                 cout<<endl;
                 check = false;
               }
             }
             cout<<"Please enter your name"<<endl;
             getline(cin, name);
-            if(_Bclass == "First")
+            cout<<"Please enter the Departure city of your flight"<<endl;
+            getline(cin, depart);
+            cout<<"Please enter the Arrive city of your flight"<<endl;
+            getline(cin,arrive);
+            if(_Bclass == "First Class")
             {
-              if(First.cancelflight(name))
-              cout<<name<<" Your flight has been canceled"<<endl;
-            }
-            else if(_Bclass == "Buss")
-            {
-              if(Buss.cancelflight(name))
-              cout<<name<<" Your flight has been canceled"<<endl;
+              Edge * temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                  temp->firstClass->cancelflight(name);
+              }
 
             }
-            else if(_Bclass == "Econ")
-            {
-              if(Econ.cancelflight(name))
-              cout<<name<<" Your flight has been canceled"<<endl;
 
+            else if(_Bclass == "Business Class")
+            {
+              Edge *temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                temp->businessClass->cancelflight(name);
+              }
+
+
+
+            }
+            else if(_Bclass == "Economy Class")
+            {
+
+              Edge *temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                temp->coachClass->cancelflight(name);
+              }
             }
             else
             {
@@ -136,66 +141,70 @@ int main(int argc, char*argv[])
             }
             break;
           }
-          case 4:
-          {//cancel flights
-            string name;
-            cout<<"Please enter your class your ticket is in (First/Buss/Econ)"<<endl;
-            getline(cin, _Bclass);
+          case 3:
+          {
+            string name,depart,arrive;
+            bool check = false, checkedge = false;
+            while (!check)
+            {
+              cout<<"Please enter your class before you cancel (First Class / Business Class / Economy Class)"<<endl;
+              getline(cin, _Bclass);
+              if(_Bclass == "First Class" || _Bclass == "Business Class" || _Bclass =="Economy Class")
+              {
+                check = true;
+              }
+              else
+              {
+                cout<<"Please enter (First Class / Business Class / Economy Class)"<<endl;
+                cout<<endl;
+                check = false;
+              }
+            }
             cout<<"Please enter your name"<<endl;
             getline(cin, name);
-            if(_Bclass == "First")
+            cout<<"Please enter the Departure city of your flight"<<endl;
+            getline(cin, depart);
+            cout<<"Please enter the Arrive city of your flight"<<endl;
+            getline(cin,arrive);
+            if(_Bclass == "First Class")
             {
-              First.cancelflight(name);
-            }
-            else if(_Bclass == "Buss")
-            {
-              Buss.cancelflight(name);
-            }
-            else if(_Bclass == "Econ")
-            {
-              Econ.cancelflight(name);
-            }
-            else
-            {
-              cout <<"Not a vaild class"<<endl;
-            }
-            //rebook flight
-            cout<<"Please enter your departing airport code"<<endl;
-            getline(cin,_Depart);
-            cout<<"Please enter your arriveal airport code"<<endl;
-            getline(cin,_Arrive);
-            // if(G.Searchflight(_Depart,_Arrive))
-            // {
+              Edge * temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                  temp->firstClass->cancelflight(name);
+              }
 
-            cout<<"Please enter number of bag"<<endl;
-            getline(cin,_Bagnum);
-            bagnum = stoi(_Bagnum);
-            cout<<"Please enter First/Buss/Econ tickets class"<<endl;
-            getline(cin,_Bclass);
-            if(_Bclass == "First")
-            {
-              First.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
             }
-            else if(_Bclass == "Buss")
+
+            else if(_Bclass == "Business Class")
             {
-              Buss.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
+              Edge *temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                temp->businessClass->cancelflight(name);
+              }
+
+
+
             }
-            else if(_Bclass == "Econ")
+            else if(_Bclass == "Economy Class")
             {
-              Econ.enqueue (_PName,depart,arrive,_Bclass ,bagnum);
+
+              Edge *temp = g.findEdge(depart,arrive);
+              if(temp !=nullptr)
+              {
+                temp->coachClass->cancelflight(name);
+              }
             }
             else
             {
-              cout <<"Not a vaild class"<<endl;
+              cout <<"The class you input is not a vaild class"<<endl;
             }
-            // }
-            // else
-            // {
-            //   cout<<"We have no flght to flight there, please traval somewhere else"<<endl;
-            // }
+            g.bookFlight();
+
             break;
           }
-          case 5:
+          case 4:
       {
         string name;
         cout << "Name of passenger: ";
@@ -219,17 +228,7 @@ int main(int argc, char*argv[])
         g.passengerInfo(name, _Depart, _Arrive, _Bclass);
         break;
       }
-          case 6:
-          {
-            cout << "displayEdges" <<endl;
-            g.displayEdges();
-            cout << "BFT" << endl;
-            g.printBFT();
-            cout << "DFT" << endl;
-            g.printDFT();
-            break;
-          }
-          case 7:
+          case 5:
           {
             cout<<"Thank you for visiting TerrificAirlines"<<endl;
             return 0;
