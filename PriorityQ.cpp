@@ -83,12 +83,12 @@ void PriorityQueue::dequeue()
     repairDownward(0);
   }
 }
-
 bool PriorityQueue::cancelflight(string name)
 {
+  int flag = false;
   if(isEmpty())
   {
-    cout << "I can not find you in our database" << endl;
+    cout << "We can not find you in our database" << endl;
     return false;
   }
   else if(currentQueueSize==1)
@@ -109,10 +109,21 @@ bool PriorityQueue::cancelflight(string name)
     }
     if(p  != -1)
     {
-      swap(priorityQueue[0],priorityQueue[p]);
+      swap(priorityQueue[currentQueueSize-1],priorityQueue[p]);
       currentQueueSize--;
-      repairDownward(0);
-      cout<<"Your flight has been canceled"<<endl;
+      repairDownward(p);
+      for (int i = 0; i < currentQueueSize; i++)
+      {
+        if(priorityQueue[i].PName == name)
+        {
+          flag = true;
+          break;
+        }
+      }
+      if(!flag)
+      {
+        cout<<"Your flight has been canceled"<<endl;
+      }
       return true;
     }
     else
