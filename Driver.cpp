@@ -22,21 +22,6 @@ void menu()
 
 }
 
-// void getCapitalCities(Cities &tree)
-// {
-//   ifstream capital("stateCapitals.txt");
-//
-//   if(capital.is_open())
-//   {
-//     string city;
-//     while(!capital.eof())
-//     {
-//       getline(capital, city);
-//       tree.addCity(city);
-//     }
-//   capital.close();
-//   }
-// }
 
 int main(int argc, char*argv[])
 {
@@ -53,8 +38,9 @@ int main(int argc, char*argv[])
     stringstream ss;
     ss << temp;
     getline(ss, l, ',');
+    cout << "Cities TerrificAirlines flys from or to:" << endl;
     while(getline(ss, l, ',')){
-      cout << l << endl;
+      cout << " - " << l << endl;
       g.addVertex(l);
       verti.push_back(l);
     }
@@ -68,7 +54,6 @@ int main(int argc, char*argv[])
         getline(ss, much, ',');
         dura = stoi(much);
         if(dist > 0 && dura > 0){
-          cout << " ... Reading in " << each << " -- " << verti[i] << " -- " << dist <<  " -- " << dura <<endl;
           g.addEdge(each, verti[i], dist, dura);
         }
         i++;
@@ -104,86 +89,9 @@ int main(int argc, char*argv[])
         }
         case 2:
         {
-          string Bcheck;
-          bool check= false;
-          Edge * pq;
-          float price;
-          cout<<"Departaure city: ";
-        getline(cin,depart);
-        while(!g.findVertex(depart))
-        {
-          cout << "TerrificAirlines does not have any flight available from that city: ";
-          getline(cin,depart);
+          g.bookFlight();
+          break;
         }
-        cout<<"Arrival city: ";
-        getline(cin,arrive);
-        while(!g.findVertex(arrive))
-        {
-          cout << "TerrificAirlines does not have any flight available to that city: ";
-          getline(cin,arrive);
-        }
-          // if(G.Searchflight(_Depart,_Arrive))
-          // {
-          cout<<"Please enter your full name"<<endl;
-          getline(cin,_PName);
-
-          while(!check)
-          {
-            cout<<"Please enter number of bag"<<endl;
-            getline(cin,_Bagnum);
-            bagnum = stoi(_Bagnum);
-            if(bagnum > 0 && bagnum <=3)
-            {
-              check = true;
-            }
-            else
-            {
-              check = false;
-              cout<<"Sorry, please enter the valid input, we only allow up to 3 bags at most"<<endl;
-            }
-          }
-          check = false;
-          while(!check)
-          {
-
-            cout<<"Please enter the class type from the following options: (First Class/ Business Class/ Economy Class)"<<endl;
-            getline(cin,_Bclass);
-            if(_Bclass == "First Class" || _Bclass == "Business Class" || _Bclass =="Economy Class")
-            {
-              check = true;
-            }
-            else
-            {
-              check= false;
-              cout<<"Please enter from the available options (First Class/ Business Class/ Economy Class)"<<endl;
-            }
-          }
-          check = false;
-          while(!check)
-          {
-            pq = g.findEdge(depart, arrive);
-            if(pq != NULL){
-              price = pq->distance;
-              price = (price/2) + 50;
-            }
-            cout << std::fixed;
-            cout << fixed <<setprecision(2);
-            cout<<"The price of this trip will be $"<< price << ", do you want to book this trip? Please enter (Yes/No)"<<endl;
-            getline(cin,Bcheck);
-            if(Bcheck == "Yes"){
-              g.addMember(_PName, _Bclass, depart, arrive, bagnum);
-              check = true;
-            }else if(Bcheck == "No"){
-              break;
-            }
-            else{
-                cout<<"Please enter (Yes/No)"<<endl;
-                check = false;
-              }
-            }
-
-            break;
-          }
           case 3:
           {
             string name;

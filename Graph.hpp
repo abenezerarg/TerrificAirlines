@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include "PriorityQ.hpp"
 
 using namespace std;
@@ -48,6 +49,7 @@ class Graph
     PriorityQueue *findClass(string depart, string arrive, string className);
     void passengerInfo(string name,string depart,string arrive, string className);
     Edge * findEdge(string depart, string arrive);
+    void bookFlight();
 
 
   private:
