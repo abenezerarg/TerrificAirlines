@@ -43,14 +43,9 @@ class Graph
     void printDFT();
     void printBFT();
     void setAllVerticesUnvisited();
-<<<<<<< HEAD
-    void addMember(string name, string class_, string depart, string arrive, int bags, int index);
-=======
-    void addMember(string name, string Class, string depart, string arrive, int bags, int index);
->>>>>>> origin/master
-
-    bool Searchflight(string Depart, string Arrive);
+    bool addMember(string name, string class_, string depart, string arrive, int bags);
     vertex *findVertex(std::string name);
+    Edge * findEdge(string depart, string arrive);
 
 
   private:

@@ -4,6 +4,7 @@
 #include <string>
 #include "PriorityQ.hpp"
 #include "Graph.hpp"
+#include <iomanip>
 
 using namespace std;
 //problem, what happen if two people have the same name?
@@ -109,21 +110,20 @@ int main(int argc, char*argv[])
         {
           string Bcheck;
           bool check= false;
-          bool checkB = false;
-          bool checkF = false;
-          bool checkE = false;
+          Edge * pq;
+          float price;
           cout<<"Departaure city: ";
         getline(cin,depart);
         while(!g.findVertex(depart))
         {
-          cout << "TerrificAirlines only operates in capital cities in the United States: ";
+          cout << "TerrificAirlines does not have any flight available from that city: ";
           getline(cin,depart);
         }
         cout<<"Arrival city: ";
         getline(cin,arrive);
         while(!g.findVertex(arrive))
         {
-          cout << "TerrificAirlines only operates in capital cities in the United States: ";
+          cout << "TerrificAirlines does not have any flight available to that city: ";
           getline(cin,arrive);
         }
           // if(G.Searchflight(_Depart,_Arrive))
@@ -143,104 +143,49 @@ int main(int argc, char*argv[])
             else
             {
               check = false;
-              cout<<"Sorry, please enter the vail input, we only allow 3 bags at most"<<endl;
+              cout<<"Sorry, please enter the valid input, we only allow up to 3 bags at most"<<endl;
             }
           }
           check = false;
           while(!check)
           {
 
-            cout<<"Please enter First/Buss/Econ tickets class"<<endl;
+            cout<<"Please enter the class type from the following options: (First Class/ Business Class/ Economy Class)"<<endl;
             getline(cin,_Bclass);
-            if(_Bclass == "First" || _Bclass == "Buss" || _Bclass =="Econ")
+            if(_Bclass == "First Class" || _Bclass == "Business Class" || _Bclass =="Economy Class")
             {
               check = true;
             }
             else
             {
               check= false;
-              cout<<"Please enter (First/Buss/Econ)"<<endl;
+              cout<<"Please enter from the available options (First Class/ Business Class/ Economy Class)"<<endl;
             }
           }
           check = false;
           while(!check)
           {
-            cout<<"The price of this trip will be $2, do you want to book this trip? Please enter (Yes/No)"<<endl;
+            pq = g.findEdge(depart, arrive);
+            if(pq != NULL){
+              price = pq->distance;
+              price = (price/2) + 50;
+            }
+            cout << std::fixed;
+            cout << fixed <<setprecision(2);
+            cout<<"The price of this trip will be $"<< price << ", do you want to book this trip? Please enter (Yes/No)"<<endl;
             getline(cin,Bcheck);
-            if(Bcheck == "Yes")
-            {
+            if(Bcheck == "Yes"){
+              g.addMember(_PName, _Bclass, depart, arrive, bagnum);
               check = true;
-              if(_Bclass == "First")
-              {
-                if(First.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
-                {
-                  checkF = true;
-                }
-                else
-                {
-                  cout<<"book ticket fail"<<endl;
-                }
-              }
-              else if(_Bclass == "Buss")
-              {
-                if(Buss.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
-                {
-                  checkB = true;
-                }
-                else
-                {
-                  cout<<"book ticket fail"<<endl;
-                }
-              }
-              else if(_Bclass == "Econ")
-              {
-                if(Econ.enqueue (_PName,depart,arrive,_Bclass ,bagnum))
-                {
-                  checkE = true;
-                }
-                else
-                {
-                  cout<<"book ticket fail"<<endl;
-                }
-              }
-                else
-                {
-                  cout <<"Not a vaild class, please enter a valid class (First/Buss/Econ)"<<endl;
-                }
-              } else if (Bcheck == "No") {
-                break;
-              } else
-              {
+            }else if(Bcheck == "No"){
+              break;
+            }
+            else{
                 cout<<"Please enter (Yes/No)"<<endl;
                 check = false;
               }
             }
-            if(checkE)
-            {
-              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
-              cout<<endl;
-              checkE = false;
-            }
-            if(checkB)
-            {
-              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
-              cout<<endl;
-              checkE = false;
-            }
-            if(checkF)
-            {
 
-              cout<<"Comfirmation: "<< " Name " << _PName<<"."<<" Depart "<< depart<<"." <<" Arrive " << arrive <<"."<< " Class: "<< _Bclass<<"." <<endl;
-              cout<<endl;
-              checkF = false;
-
-            }
-
-            //}
-            // else
-            // {
-            //   cout<<"We have no flght to flight there, please traval somewhere else"<<endl;
-            // }
             break;
           }
           case 3:
