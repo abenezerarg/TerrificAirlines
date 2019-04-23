@@ -48,6 +48,7 @@ class PriorityQueue
     //searches for specific passenger in a class and returns their information
     void search(string name, int add);
     bool cancelflight(string name);
+    PNode* priorityQueue;
 
     private:
     //Purpose: maintain heap properties by swapping node with parent if necessary
@@ -56,7 +57,7 @@ class PriorityQueue
     // Purpose: maintain heap properties by swapping node with child if necessary
     void repairDownward(int nodeIndex);
 
-    PNode* priorityQueue; //pointer to the array used to implement priority queue
+     //pointer to the array used to implement priority queue
     int currentQueueSize; //number of group currently in the priority queue
     int maxQueueSize; //maximum capacity of priority queue
 };

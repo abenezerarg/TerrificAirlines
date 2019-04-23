@@ -36,7 +36,6 @@ void Graph::addEdge(string city1, string city2, int distance, int duration){
     for(int i = 0; i < vertices.size(); i++){
       if(vertices[i].cityName == city1){
         vertices[i].Edges.push_back(c1TOc2);
-        cout << "hey" << endl;
         break;
       }
     }
@@ -123,27 +122,43 @@ void Graph::DFT_traversal(vertex * v){
   }
 }
 
-void Graph::addMember(string name, string class_, string depart, string arrive, int bags, int index){
-  // vertex * d = findVertex(depart);
-  // vertex * a = findVertex(arrive);
-  //
-  // if(d != NULL && a != NULL){
-  //   for(int i = 0, i < d->Edges.size(); i++){
-  //     if(d->Edges[i].v == a){
-  //       if(class == "First Class"){
-  //         d->Edges[i].firstClass.enqueue(name, depart, arrive, bags, index);
-  //       }else if(class == "Business Class"){
-  //         d->Edges[i].businessClass.enqueue(name, depart, arrive, bags, index);
-  //       }else if(class == "Economy Class"){
-  //         d->Edges[i].coachClass.enqueue(name, depart, arrive, bags, index);
-  //       }else{
-  //         cout << "We do not recognize this as a class option" << endl;
-  //       }
-  //     }
-  //     break;
-  //   }
-  // }else{
-  //   cout << "One of the cities listed is not available to book to (/from). "
-  // }
-  // return;
+bool Graph::addMember(string name, string class_, string depart, string arrive, int bags){
+  vertex * d = findVertex(depart);
+  vertex * a = findVertex(arrive);
+  if(d != NULL && a != NULL){
+    for(int i = 0; i < d->Edges.size(); i++){
+      if(d->Edges[i].v == a){
+        if(class_ == "First Class"){
+          d->Edges[i].firstClass->enqueue(name, depart, arrive, class_, bags);
+          break;
+        }else if(class_ == "Business Class"){
+          d->Edges[i].businessClass->enqueue(name, depart, arrive, class_, bags);
+          break;
+        }else if(class_ == "Economy Class"){
+          d->Edges[i].coachClass->enqueue(name, depart, arrive, class_, bags);
+          break;
+        }else{
+          cout << "We do not recognize this as a class option" << endl;
+        }
+      }
+    }
+  }else{
+    cout << "One of the cities listed is not available to book to (/from). " << endl;
+    return false;
+  }
+  return true;
+}
+
+Edge * Graph::findEdge(string depart, string arrive){
+  vertex * d = findVertex(depart);
+  vertex * a = findVertex(arrive);
+
+  if(d != NULL && a != NULL){
+    for(int i = 0; i < d->Edges.size(); i++){
+      if(d->Edges[i].v == a){
+        return &d->Edges[i];
+      }
+    }
+  }
+  return NULL;
 }
