@@ -45,6 +45,8 @@ class Graph
     void setAllVerticesUnvisited();
     bool addMember(string name, string class_, string depart, string arrive, int bags);
     vertex *findVertex(std::string name);
+    PriorityQueue *findClass(string depart, string arrive, string className);
+    void passengerInfo(string name,string depart,string arrive, string className);
     Edge * findEdge(string depart, string arrive);
 
 

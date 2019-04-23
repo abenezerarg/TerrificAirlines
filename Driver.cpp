@@ -40,10 +40,6 @@ void menu()
 
 int main(int argc, char*argv[])
 {
-  if(argc != 2){
-    cout << "Usage: REQUIRED: <inputfilename.txt> " << endl;
-    return -1;
-  }else{
     ifstream inStream1;
     string temp, l;
     Graph g;
@@ -52,7 +48,7 @@ int main(int argc, char*argv[])
     int i;
     int dist, dura;
     vector <string> verti;
-    inStream1.open(argv[1]);
+    inStream1.open("stateCapitals.txt");
     getline(inStream1, temp);
     stringstream ss;
     ss << temp;
@@ -298,13 +294,21 @@ int main(int argc, char*argv[])
         getline(cin, name);
         cout << "Traveling class: ";
         getline(cin, _Bclass);
-        if(_Bclass.compare("First") == 0 || _Bclass.compare("first") == 0)
-        First.search(name, 0);
-        if(_Bclass.compare("Business") == 0 || _Bclass.compare("business") == 0)
-        Buss.search(name, 25);
-        if(_Bclass.compare("Economy") == 0 || _Bclass.compare("economy") == 0)
-        Econ.search(name, 50);
-
+        cout<<"Departing from: ";
+        getline(cin,_Depart);
+        while(!g.findVertex(_Depart))
+        {
+          cout << "TerrificAirlines does not have any flight available to that city: ";
+          getline(cin,_Depart);
+        }
+        cout<<"Destination: ";
+        getline(cin,_Arrive);
+        while(!g.findVertex(_Arrive))
+        {
+          cout << "TerrificAirlines does not have any flight available to that city: ";
+          getline(cin,_Arrive);
+        }
+        g.passengerInfo(name, _Depart, _Arrive, _Bclass);
         break;
       }
           case 6:
@@ -324,6 +328,4 @@ int main(int argc, char*argv[])
           }
         }
       }
-    }
-
 }
