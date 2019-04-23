@@ -163,6 +163,54 @@ Edge * Graph::findEdge(string depart, string arrive){
   return NULL;
 }
 
+PriorityQueue *Graph::findClass(string depart, string arrive, string className)
+{
+  Edge *found = findEdge(depart, arrive);
+  if(found != NULL)
+  {
+    if(className.compare("First Class") == 0) return found->firstClass;
+    else if(className.compare("Business Class") == 0) return found->businessClass;
+    else if(className.compare("Economy Class") == 0) return found->coachClass;
+    else
+    {
+      return NULL;
+    }
+  }
+  return NULL;
+}
+
+void Graph::passengerInfo(string name,string depart,string arrive, string className)
+{
+  PriorityQueue *Class = findClass(depart, arrive, className);
+  int add;
+  if(className.compare("First Class") == 0) add = 0;
+  else if(className.compare("Business Class") == 0) add = 25;
+  else if(className.compare("Economy Class") == 0) add = 50;
+
+  if(Class != NULL)
+  {
+  PNode *priorityQueue = Class->priorityQueue;
+  int size = Class->currentQueueSize;
+    for(int i = 0; i < size; i++)
+    {
+      if(name == priorityQueue[i].PName)
+      {
+        cout << "------------------------------------------------------------------------------------------------------" << endl;
+        cout << "[Pasenger name: " << priorityQueue[i].PName<< "]" <<"   [Departaure city: "<<priorityQueue[i].Depart << "]"<< endl;
+        cout << endl;
+        cout << "[seat: " <<priorityQueue[i].seatNum+1+add<<"]"<<"   [Arrival city: "<<priorityQueue[i].Arrive <<"]"<< "   [Confirmation number:" <<priorityQueue[i].confNum<< "]" << endl;
+        cout << endl;
+        cout <<  "[class: " <<priorityQueue[i].BClass<< "]" << "   [checked bags: " << priorityQueue[i].Bagnum <<"]"<< endl;
+        cout << endl;
+        cout << "------------------------------------------------------------------------------------------------------" << endl;
+        return;
+      }
+    }
+  }
+    cout << endl;
+    cout << "passenger not found" << endl;
+    cout << endl;
+}
 void Graph::bookFlight(){
   string _PName, _Bclass, _Bagnum, depart, arrive;
   int bagnum;

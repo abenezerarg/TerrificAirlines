@@ -50,6 +50,7 @@ class PriorityQueue
     void search(string name, int add);
     bool cancelflight(string name);
     PNode* priorityQueue;
+    int currentQueueSize; //number of group currently in the priority queue
 
     private:
     //Purpose: maintain heap properties by swapping node with parent if necessary
@@ -59,26 +60,7 @@ class PriorityQueue
     void repairDownward(int nodeIndex);
 
      //pointer to the array used to implement priority queue
-    int currentQueueSize; //number of group currently in the priority queue
     int maxQueueSize; //maximum capacity of priority queue
-};
-
-struct cityNode{
-  string cityName;
-  cityNode *parent = nullptr;     //  Pointer to the parent node
-  cityNode *leftChild = nullptr;  // Pointer to the leftchild
-  cityNode *rightChild = nullptr; // Pointer to the rightChild
-};
-class Cities
-{
- public:
- void addCity(string name);
- bool isInTree(string city);
-
- private:
-  cityNode *root;
-
-
 };
 
 #endif
