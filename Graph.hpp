@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include "PriorityQ.hpp"
 
 using namespace std;
@@ -46,6 +47,7 @@ class Graph
     bool addMember(string name, string class_, string depart, string arrive, int bags);
     vertex *findVertex(std::string name);
     Edge * findEdge(string depart, string arrive);
+    void bookFlight();
 
 
   private:

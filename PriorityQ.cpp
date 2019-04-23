@@ -3,7 +3,7 @@
 #include <string>
 #include <stdio.h>
 #include <iomanip>
-// #include <ctring>
+#include <cstdlib>
 #include "PriorityQ.hpp"
 using namespace std;
 
@@ -49,6 +49,7 @@ bool PriorityQueue::enqueue (string _PName, string _Depart,string _Arrive,string
   newGroup.BClass = _BClass;
   newGroup.Bagnum = _Bagnum;
   newGroup.seatNum = currentQueueSize;
+  newGroup.confNum = rand() % 66000 + 65000;
 
   if(currentQueueSize == maxQueueSize)
   {
